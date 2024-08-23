@@ -22,6 +22,16 @@ make clean-dev
 After starting Leagueify with `make start-dev` you should see the Leagueify banner in the terminal, informing that the system is ready to be used.
 Upon saving changes, [air][air-github] will automatically reload the system, Leagueify will be ready once the banner is again shown.
 
+```bash
+'||'      '||''''|      |      ..|'''.|  '||'  '|' '||''''|  '||' '||''''| '||' '|'
+ ||        ||  .       |||    .|'     '   ||    |   ||  .     ||   ||  .     || |
+ ||        ||''|      |  ||   ||    ....  ||    |   ||''|     ||   ||''|      ||
+ ||        ||        .''''|.  '|.    ||   ||    |   ||        ||   ||         ||
+.||.....| .||.....| .|.  .||.  ''|...'|    '|..'   .||.....| .||. .||.       .||.
+```
+The Leagueify banner was generated using [PatorJK][banner-website].
+
 [air-github]: https://github.com/air-verse/air
+[banner-website]: https://patorjk.com/software/taag/#p=display&f=Kban&t=LEAGUEIFY
 [echo-website]: https://echo.labstack.com
 [go-website]: https://go.dev
