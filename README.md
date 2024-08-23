@@ -8,7 +8,7 @@ This server is written in [Go][go-website] using the [Echo][echo-website] framew
 
 Using the provided development Docker compose example, Leagueify is quick and easy to get running with intuitive make commands.
 
-`bash
+```bash
 # Start Leagueify in development mode
 make start-dev
 
@@ -17,7 +17,7 @@ make start-dev-detached
 
 # Stop Leagueify and remove docker images
 make clean-dev
-`
+```
 
 After starting Leagueify with `make start-dev` you should see the Leagueify banner in the terminal, informing that the system is ready to be used.
 Upon saving changes, [air][air-github] will automatically reload the system, Leagueify will be ready once the banner is again shown.
