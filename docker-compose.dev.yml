@@ -1,0 +1,52 @@
+services:
+  traefik-dev:
+    image: traefik:v2.11.0
+    command:
+      - --api.insecure=true
+      - --api.dashboard=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:8888
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik.rule=Host(`traefik.localhost`)
+      - traefik.http.routers.traefik.entrypoints=web
+      - traefik.http.routers.traefik.service=api@internal
+    ports:
+      - 80:8888
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
+
+  leagueify-dev:
+    image: leagueify-dev
+    command: "air"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.leagueify-dev.rule=Host(`localhost`)
+      - traefik.http.routers.leagueify-dev.entrypoints=web
+      - traefik.http.middlewares.leagueify-dev.ratelimit.average=100
+    environment:
+      DB_CONN_STR: host=database-dev user=leagueify-user password=leagueify-pass dbname=leagueify sslmode=disable
+      JWT_SECRET: NeverGonnaGiveYouUp
+    expose:
+      - 8888
+    volumes:
+      - ./:/app
+    restart: always
+
+  database-dev:
+    container_name: database
+    image: postgres:16.2-alpine3.19
+    environment:
+      POSTGRES_USER: leagueify-user
+      POSTGRES_PASSWORD: leagueify-pass
+      POSTGRES_DB: leagueify
+    ports:
+      - 5432:5432
+    volumes:
+      - database:/data/db
+    restart: always
+
+volumes:
+  database:
