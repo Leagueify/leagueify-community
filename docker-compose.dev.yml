@@ -29,6 +29,7 @@ services:
     environment:
       DB_CONN_STR: host=database-dev user=leagueify-user password=leagueify-pass dbname=leagueify sslmode=disable
       JWT_SECRET: NeverGonnaGiveYouUp
+      SENTRY_ENV: development
     expose:
       - 8888
     volumes:
