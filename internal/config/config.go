@@ -4,9 +4,14 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/leagueify/leagueify/internal/lib/token"
 )
 
 type config struct {
+	DB        string
+	DBConnStr string
+	JWTSecret string
 	Sentry    bool
 	SentryDSN string
 	SentryENV string
@@ -21,6 +26,22 @@ func LoadConfig() *config {
 }
 
 func (c *config) loadFromEnv() {
+	// database config
+	// database service
+	if db := os.Getenv("DATABASE"); db != "" {
+		c.DB = strings.TrimSpace(db)
+	}
+	// database connection string
+	if dbConnStr := os.Getenv("DB_CONN_STR"); dbConnStr != "" {
+		c.DBConnStr = strings.TrimSpace(dbConnStr)
+	}
+
+	// jwt config
+	// jwt secret
+	if jwtSecret := os.Getenv("JWT_SECRET"); jwtSecret != "" {
+		c.JWTSecret = strings.TrimSpace(jwtSecret)
+	}
+
 	// sentry config
 	// sentry
 	if sentry := os.Getenv("SENTRY"); sentry != "" {
@@ -49,6 +70,12 @@ func (c *config) loadFromEnv() {
 }
 
 func (c *config) setDefaults() {
+	// database
+	c.DB = "postgres"
+
+	// jwt
+	c.JWTSecret = token.UnsignedToken(32)
+
 	// Sentry
 	c.Sentry = true
 	c.SentryDSN = "https://502e62292f21d9aa5841d46babe95fbf@o4507651956932608.ingest.us.sentry.io/4507827637780480"

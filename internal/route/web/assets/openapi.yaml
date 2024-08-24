@@ -1,0 +1,230 @@
+openapi: 3.1.0
+info:
+  version: 0.2.0
+  title: Leagueify API
+  summary: Open Source Sporting League Platform.
+  description: Host your own sports league using Leagueify, the all-in-one league hosting platform.
+  license:
+    name: MIT
+    identifier: MIT
+    url: https://raw.githubusercontent.com/Leagueify/leagueify/main/LICENSE
+contact:
+    name: Leagueify Support
+    url: https://github.com/Leagueify/leagueify/issues
+    email: help@leagueify.org
+
+servers:
+  - url: http://localhost/api
+    description: Dockerized Local Environment
+  - url: http://localhost:8888/api
+    description: Standalone Executable Local Environment
+
+paths:
+  /accounts:
+    post:
+      tags:
+      - Accounts
+      summary: Create Account
+      description: '
+        Create an account for the Leagueify platform. Accounts created before
+        the email service is configured do not require verification. By default,
+        account owners must be 18 years of age or older due to required waivers.
+      '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/account/creation"
+      responses:
+        201:
+          $ref: "#/components/success/generic"
+        400:
+          $ref: "#/components/errors/badRequest"
+  /accounts/login:
+    post:
+      tags:
+      - Accounts
+      summary: Account Login
+      description: '
+        Login to an account within the Leagueify platform. Accounts created
+        before the email service is configured do not require verification. 
+        Accounts that are flagged inactive are unavailable for login.
+      '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/account/login"
+      responses:
+        200:
+          $ref: "#/components/success/login"
+        400:
+          $ref: "#/components/errors/badRequest"
+        401:
+          $ref: "#/components/errors/unauthorized"
+  /accounts/logout:
+    post:
+      tags:
+      - Accounts
+      security:
+        - bearerAuth: []
+      summary: Account Logout
+      description: '
+        Logout of an account within the Leagueify platform. Currently, this has 
+        no functionality other than validating authentication requirements on 
+        routes.
+      '
+      responses:
+        200:
+          $ref: "#/components/success/generic"
+        401:
+          $ref: "#/components/errors/unauthorized"
+  /accounts/{id}/activate:
+    post:
+      tags:
+      - Accounts
+      summary: Activate Account
+      description: '
+        Activate an account within the Leagueify platform. Accounts created before
+         the email service is configured do not require verification, as they 
+        automatically maked as active.
+      '
+      parameters:
+        - name: id
+          in: path
+          description: Account ID to be verified
+          required: true
+          type: string
+      responses:
+        200:
+          $ref: "#/components/success/generic"
+        401:
+          $ref: "#/components/errors/unauthorized"
+
+components:
+  # account responses
+  account:
+    creation:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+        - dateOfBirth
+        - phone
+      properties:
+        firstName:
+          description: User's first name
+          type: string
+          minLength: 2
+          maxLength: 32
+          example: John
+        lastName:
+          description: User's last name
+          type: string
+          minLength: 2
+          maxLength: 32
+          example: Doe
+        email:
+          description: Email associated to the account
+          type: string
+          example: test@leagueify.org
+        password:
+          description: Password for the associated account
+          type: string
+          example: Test123!
+        dateOfBirth:
+          description: User's date of birth
+          type: string
+          example: "2000-01-01"
+        phone:
+          description: User's phone number
+          type: string
+          example: "+12085550000"
+        coach:
+          description: User's preference to coach
+          type: boolean
+          default: false
+          example: true
+        volunteer:
+          description: User's preference to voluneer
+          type: boolean
+          default: false
+          example: false
+    login:
+      type: object
+      requred:
+        - email
+        - password
+      properties:
+        email:
+          description: Email associated to the account
+          type: string
+          example: test@leagueify.org
+        password:
+          description: Password for the associated account
+          type: string
+          example: Test123!
+  # error responses
+  errors:
+    badRequest:
+      description: Error with request payload
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                description: HTTP status text
+                type: string
+                example: bad request
+              detail:
+                description: Details related to request payload error
+                type: string
+                example: invalid json payload
+    unauthorized:
+      description: Unauthorized response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                description: HTTP status text
+                type: string
+                example: unauthorized
+  # successful responses
+  success:
+    generic:
+      description: Successful request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                description: HTTP status text
+                type: string
+                example: success
+    login:
+      description: Successfuly logged into account
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                description: HTTP status text
+                type: string
+                example: ok
+              detail:
+                description: JWT Authentication Token
+                type: string
+                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwic3ViIjoiNE40MUMzQzkiLCJhdWQiOlsiYXBpIl0sImV4cCI6MTcyNDM4MTA0MCwibmJmIjoxNzI0MzgwNjgwLCJpYXQiOjE3MjQzODA3NDB9.Zow0_O6ThgyxhdU1D1oF4ZlqCrXC2wvCvh88QIbEXRk
+  # security schemes
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

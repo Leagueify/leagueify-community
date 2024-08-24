@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/leagueify/leagueify/internal/config"
+	"github.com/leagueify/leagueify/internal/route/api"
+	"github.com/leagueify/leagueify/internal/route/web"
 
 	"github.com/getsentry/sentry-go"
 	sentryecho "github.com/getsentry/sentry-go/echo"
@@ -40,9 +41,8 @@ func main() {
 	}
 
 	// initialize routes
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!\n")
-	})
+	api.Routes(e)
+	web.Routes(e)
 
 	// start server
 	e.Logger.Fatal(e.Start(":8888"))
