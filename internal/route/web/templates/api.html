@@ -1,0 +1,21 @@
+{{ define "api-docs" }}
+<!doctype html>
+<html lang='en'>
+
+<head>
+	<meta charset='utf-8' />
+	<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no' />
+	<title>Leagueify API Documentation</title>
+	<meta name='description' content='Leagueify API Documentation' />
+	<link rel='icon' href='assets/Leagueify.svg' />
+	<script src='https://unpkg.com/@stoplight/elements/web-components.min.js'></script>
+	<link rel='stylesheet' href='https://unpkg.com/@stoplight/elements/styles.min.css' />
+</head>
+
+<body style='height: 100vh'>
+	<elements-api apiDescriptionUrl='assets/openapi.yaml' logo='assets/Leagueify.svg' router='memory'
+		layout='responsive' hideExport='true' hideSchemas='true' />
+</body>
+
+</html>
+{{ end }}
