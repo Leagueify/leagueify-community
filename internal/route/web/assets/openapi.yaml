@@ -100,9 +100,24 @@ paths:
           $ref: "#/components/success/generic"
         401:
           $ref: "#/components/errors/unauthorized"
+  /sports:
+    get:
+      tags:
+      - Sports
+      security:
+        - bearerAuth: []
+      summary: List Sports
+      description: '
+        List all Leagueify supported sports.
+      '
+      responses:
+        200:
+          $ref: "#/components/success/sports-list"
+        401:
+          $ref: "#/components/errors/unauthorized"
 
 components:
-  # account responses
+  # account
   account:
     creation:
       type: object
@@ -222,6 +237,32 @@ components:
                 description: JWT Authentication Token
                 type: string
                 example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwic3ViIjoiNE40MUMzQzkiLCJhdWQiOlsiYXBpIl0sImV4cCI6MTcyNDM4MTA0MCwibmJmIjoxNzI0MzgwNjgwLCJpYXQiOjE3MjQzODA3NDB9.Zow0_O6ThgyxhdU1D1oF4ZlqCrXC2wvCvh88QIbEXRk
+    sports-list:
+      description: Supported Leagueify Sports
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                description: HTTP status text
+                type: string
+                example: ok
+              detail:
+                description: List of Sport IDs for Leagueify
+                type: array
+                items:
+                  description: Sport Objects
+                  type: object
+                  properties:
+                    id:
+                      description: Sport ID
+                      type: string
+                      example: 65
+                    name:
+                      description: Sport Name
+                      type: string
+                      example: Hockey
   # security schemes
   securitySchemes:
     bearerAuth:
