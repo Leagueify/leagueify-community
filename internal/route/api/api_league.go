@@ -12,7 +12,7 @@ import (
 )
 
 func leagueEndpoints(e *echo.Group) {
-	e.POST("/leagues", route.AuthRequired(createLeague, "api"))
+	e.POST("/leagues", route.AdminRequired(createLeague, "api"))
 }
 
 func createLeague(ctx echo.Context) error {
