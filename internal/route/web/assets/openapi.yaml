@@ -172,6 +172,8 @@ components:
           description: Password for the associated account
           type: string
           example: Test123!
+          minLength: 8
+          maxLength: 64
         dateOfBirth:
           description: User's date of birth
           type: string
@@ -204,6 +206,8 @@ components:
           description: Password for the associated account
           type: string
           example: Test123!
+          minLength: 8
+          maxLength: 64
   league:
     creation:
       type: object
@@ -283,7 +287,7 @@ components:
               status:
                 description: HTTP status text
                 type: string
-                example: success
+                example: ok
     login:
       description: Successfuly logged into account
       content:
