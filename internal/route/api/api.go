@@ -17,5 +17,6 @@ func Routes(e *echo.Echo) {
 	routes := e.Group("/api")
 	// api endpoints
 	accountEndpoints(routes)
+	leagueEndpoints(routes)
 	sportEndpoints(routes)
 }

@@ -16,7 +16,11 @@ type Database interface {
 	CreateAccount(account model.AccountCreation) error
 	GetAccountByEmail(email string) (model.Account, error)
 	HasActiveAccounts() bool
+	// league function
+	CreateLeague(league model.LeagueCreation) error
+	HasExistingLeague() bool
 	// sport function
+	GetSportByID(sportID string) (model.Sport, error)
 	ListSports() ([]model.Sport, error)
 	// database functions
 	BeginTransaction() (*sql.Tx, error)

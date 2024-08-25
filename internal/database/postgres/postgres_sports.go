@@ -46,6 +46,19 @@ func init() {
 	}
 }
 
+func (p Postgres) GetSportByID(sportID string) (model.Sport, error) {
+	sport := model.Sport{}
+
+	if err := p.DB.QueryRow(`
+		SELECT * FROM sports WHERE id = $1
+	`, sportID[:len(sportID)-1]).Scan(
+		&sport.ID, &sport.Name,
+	); err != nil {
+		return sport, err
+	}
+
+	return sport, nil
+}
 func (p Postgres) ListSports() ([]model.Sport, error) {
 	sports := []model.Sport{}
 
