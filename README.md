@@ -23,11 +23,14 @@ After starting Leagueify with `make start-dev` you should see the Leagueify bann
 Upon saving changes, [air][air-github] will automatically reload the system, Leagueify will be ready once the banner is again shown.
 
 ```
-'||'      '||''''|      |      ..|'''.|  '||'  '|' '||''''|  '||' '||''''| '||' '|'
- ||        ||  .       |||    .|'     '   ||    |   ||  .     ||   ||  .     || |
- ||        ||''|      |  ||   ||    ....  ||    |   ||''|     ||   ||''|      ||
- ||        ||        .''''|.  '|.    ||   ||    |   ||        ||   ||         ||
-.||.....| .||.....| .|.  .||.  ''|...'|    '|..'   .||.....| .||. .||.       .||.
+leagueify-dev-1  | running...
+leagueify-dev-1  |
+leagueify-dev-1  | '||'      '||''''|      |      ..|'''.|  '||'  '|' '||''''|  '||' '||''''| '||' '|'
+leagueify-dev-1  |  ||        ||  .       |||    .|'     '   ||    |   ||  .     ||   ||  .     || |
+leagueify-dev-1  |  ||        ||''|      |  ||   ||    ....  ||    |   ||''|     ||   ||''|      ||
+leagueify-dev-1  |  ||        ||        .''''|.  '|.    ||   ||    |   ||        ||   ||         ||
+leagueify-dev-1  | .||.....| .||.....| .|.  .||.  ''|...'|    '|..'   .||.....| .||. .||.       .||.
+leagueify-dev-1  | ⇨ http server started on [::]:8888
 ```
 The Leagueify banner was generated using [PatorJK][banner-website].
 
