@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/leagueify/leagueify/internal/lib/error"
+	"github.com/leagueify/leagueify/internal/model"
 )
 
 // comparisonDate is current date if not provided
@@ -48,4 +49,22 @@ func MeetsYearRequirement(years int, providedDate string, comparisionDate *strin
 	}
 
 	return false
+}
+
+func ValidaDateRange(dates model.SeasonDates) bool {
+	startDate, err := time.Parse(time.DateOnly, dates.Start)
+	if err != nil {
+		return false
+	}
+
+	endDate, err := time.Parse(time.DateOnly, dates.End)
+	if err != nil {
+		return false
+	}
+
+	if startDate.UnixMilli() >= endDate.UnixMilli() {
+		return false
+	}
+
+	return true
 }

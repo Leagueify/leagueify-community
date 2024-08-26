@@ -19,6 +19,11 @@ type Database interface {
 	// league function
 	CreateLeague(league model.LeagueCreation) error
 	HasExistingLeague() bool
+	// season functions
+	CreateSeason(season model.Season) error
+	GetSeasonByID(sesonID string) (model.Season, error)
+	ListSeasons() ([]model.SeasonList, error)
+	UpdateSeason(seasonID string, payload model.Season) error
 	// sport function
 	GetSportByID(sportID string) (model.Sport, error)
 	ListSports() ([]model.Sport, error)

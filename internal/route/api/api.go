@@ -18,5 +18,6 @@ func Routes(e *echo.Echo) {
 	// api endpoints
 	accountEndpoints(routes)
 	leagueEndpoints(routes)
+	seasonEndpoints(routes)
 	sportEndpoints(routes)
 }
