@@ -25,7 +25,7 @@ func init() {
 			master_admin TEXT NOT NULL
 		)
 	`); err != nil {
-		panic("Error creating table 'accounts'")
+		panic("Error creating table 'leagues'")
 	}
 
 }
