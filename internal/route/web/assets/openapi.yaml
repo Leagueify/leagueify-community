@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  version: 0.2.0
+  version: 0.6.0
   title: Leagueify API
   summary: Open Source Sporting League Platform.
   description: Host your own sports league using Leagueify, the all-in-one league hosting platform.
@@ -206,6 +206,42 @@ paths:
           $ref: "#/components/errors/badRequest"
         403:
           $ref: "#/components/errors/forbidden"
+  /positions:
+    get:
+      tags:
+      - Positions
+      summary: List Positions
+      description: '
+        List all positions within the Leagueify instance. Positions are assigned
+        to players during the registration process.
+      '
+      responses:
+        200:
+          $ref: "#/components/success/positions"
+        404:
+          $ref: "#/components/errors/not-found"
+    post:
+      tags:
+      - Positions
+      security:
+        - bearerAuth: []
+      summary: Create Positions
+      description: '
+        Create player positions that will be available within the leagueify
+        instance.
+      '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/positions/creation"
+      responses:
+        201:
+          $ref: "#/components/success/created"
+        400:
+          $ref: "#/components/errors/badRequest"
+        403:
+          $ref: "#/components/errors/forbidden"
   /sports:
     get:
       tags:
@@ -352,6 +388,21 @@ components:
               description: Registration End Date
               type: string
               example: 2024-03-01
+  positions:
+    creation:
+      type: object
+      required:
+        - positions
+      properties:
+        positions:
+          description: Position list
+          type: array
+          items:
+            description: Position names
+            type: string
+          example:
+            - Skater
+            - Goalie
   # error responses
   errors:
     badRequest:
@@ -441,6 +492,32 @@ components:
                 description: JWT Authentication Token
                 type: string
                 example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwic3ViIjoiNE40MUMzQzkiLCJhdWQiOlsiYXBpIl0sImV4cCI6MTcyNDM4MTA0MCwibmJmIjoxNzI0MzgwNjgwLCJpYXQiOjE3MjQzODA3NDB9.Zow0_O6ThgyxhdU1D1oF4ZlqCrXC2wvCvh88QIbEXRk
+    positions:
+      description: League Positions
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                description: HTTP status text
+                type: string
+                example: ok
+              detail:
+                description: List of available positions
+                type: array
+                items:
+                  description: Position detail
+                  type: object
+                  properties:
+                    id:
+                      description: Position ID
+                      type: string
+                      example: XQSY
+                    name:
+                      description: Position Name
+                      type: string
+                      example: Goalie
     season:
       description: League Season Detail
       content:
