@@ -19,6 +19,10 @@ type Database interface {
 	// league function
 	CreateLeague(league model.LeagueCreation) error
 	HasExistingLeague() bool
+	// positin functions
+	CreatePositions(payload []model.Position) error
+	HasExistingPositions() bool
+	ListPositions() ([]model.Position, error)
 	// season functions
 	CreateSeason(season model.Season) error
 	GetSeasonByID(sesonID string) (model.Season, error)
