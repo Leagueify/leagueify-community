@@ -119,6 +119,8 @@ paths:
       responses:
         201:
           $ref: "#/components/success/created"
+        400:
+          $ref: "#/components/errors/badRequest"
         401:
           $ref: "#/components/errors/unauthorized"
         403:
@@ -275,7 +277,7 @@ components:
           example: false
     login:
       type: object
-      requred:
+      required:
         - email
         - password
       properties:
