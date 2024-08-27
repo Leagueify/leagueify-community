@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  version: 0.6.0
+  version: 0.7.0
   title: Leagueify API
   summary: Open Source Sporting League Platform.
   description: Host your own sports league using Leagueify, the all-in-one league hosting platform.
@@ -100,6 +100,39 @@ paths:
           $ref: "#/components/success/generic"
         401:
           $ref: "#/components/errors/unauthorized"
+  /divisions:
+    get:
+      tags:
+      - Divisions
+      summary: List Divisions
+      description: ''
+      responses:
+        200:
+          $ref: "#/components/success/seasons"
+        404:
+          $ref: "#/components/errors/not-found"
+    post:
+      tags:
+      - Divisions
+      security:
+        - bearerAuth: []
+      summary: Create Divisions
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/division/creation"
+      responses:
+        201:
+          $ref: "#/components/success/created"
+        400:
+          $ref: "#/components/errors/badRequest"
+        401:
+          $ref: "#/components/errors/unauthorized"
+        403:
+          $ref: "#/components/errors/forbidden"
+
   /leagues:
     post:
       tags:
@@ -344,6 +377,40 @@ components:
           description: Sport ID for the associated league
           type: string
           example: FGDR
+  division:
+    creation:
+      type: object
+      properties:
+        divisions:
+          type: array
+          description: Division Objects
+          items:
+            type: object
+            required:
+              - name
+              - age
+            properties:
+              name:
+                description: Division Name
+                type: string
+                example: Leagueify 18U
+                minLength: 3
+                maxLength: 32
+              age:
+                description: Division Age Object
+                type: object
+                required:
+                  - min
+                  - max
+                properties:
+                  min:
+                    description: Minimum age for division
+                    type: integer
+                    example: 13
+                  max:
+                    description: Maximum age for division
+                    type: integer
+                    example: 18
   season:
     creation:
       type: object

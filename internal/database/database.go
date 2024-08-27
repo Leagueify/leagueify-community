@@ -16,6 +16,9 @@ type Database interface {
 	CreateAccount(account model.AccountCreation) error
 	GetAccountByEmail(email string) (model.Account, error)
 	HasActiveAccounts() bool
+	// division functions
+	CreateDivisions(payload model.DivisionCreation) error
+	ListDivisions() ([]model.Division, error)
 	// league function
 	CreateLeague(league model.LeagueCreation) error
 	HasExistingLeague() bool
