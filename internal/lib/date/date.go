@@ -59,7 +59,7 @@ func ValidDate(date string) bool {
 	return false
 }
 
-func ValidaDateRange(dates model.SeasonDates) bool {
+func ValidDateRange(dates model.SeasonDates) bool {
 	startDate, err := time.Parse(time.DateOnly, dates.Start)
 	if err != nil {
 		return false
