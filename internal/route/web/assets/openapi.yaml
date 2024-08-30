@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  version: 0.8.0
+  version: 0.8.1
   title: Leagueify API
   summary: Open Source Sporting League Platform.
   description: Host your own sports league using Leagueify, the all-in-one league hosting platform.

@@ -33,6 +33,7 @@ func (p Postgres) CreatePositions(payload []model.Position) error {
 	if err != nil {
 		return err
 	}
+	defer tx.Rollback()
 
 	for _, position := range payload {
 		if _, err := tx.Exec(`
