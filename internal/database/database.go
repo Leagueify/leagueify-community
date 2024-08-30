@@ -22,7 +22,13 @@ type Database interface {
 	// league function
 	CreateLeague(league model.LeagueCreation) error
 	HasExistingLeague() bool
-	// positin functions
+	// player functions
+	CreatePlayers(payload model.Players) error
+	DeletePlayer(accountID, playerID string) error
+	GetPlayerByID(accountID, playerID string) (model.Player, error)
+	IsExistingPlayer(hash string) bool
+	ListPlayers(accountID string) ([]model.PlayerList, error)
+	// position functions
 	CreatePositions(payload []model.Position) error
 	HasExistingPositions() bool
 	ListPositions() ([]model.Position, error)

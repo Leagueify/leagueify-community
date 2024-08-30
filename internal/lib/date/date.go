@@ -51,6 +51,14 @@ func MeetsYearRequirement(years int, providedDate string, comparisionDate *strin
 	return false
 }
 
+func ValidDate(date string) bool {
+	if _, err := time.Parse(time.DateOnly, date); err == nil {
+		return true
+	}
+
+	return false
+}
+
 func ValidaDateRange(dates model.SeasonDates) bool {
 	startDate, err := time.Parse(time.DateOnly, dates.Start)
 	if err != nil {

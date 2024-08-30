@@ -35,6 +35,7 @@ func (p Postgres) CreateDivisions(payload model.DivisionCreation) error {
 	if err != nil {
 		return err
 	}
+	defer tx.Rollback()
 
 	for _, division := range payload.Divisions {
 		if _, err := tx.Exec(`
