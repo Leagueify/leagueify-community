@@ -19,6 +19,7 @@ func Routes(e *echo.Echo) {
 	accountEndpoints(routes)
 	divisionEndpoints(routes)
 	leagueEndpoints(routes)
+	playerEndpoints(routes)
 	positionEndpoints(routes)
 	seasonEndpoints(routes)
 	sportEndpoints(routes)

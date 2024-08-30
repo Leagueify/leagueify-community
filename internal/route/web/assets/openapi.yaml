@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  version: 0.7.0
+  version: 0.8.0
   title: Leagueify API
   summary: Open Source Sporting League Platform.
   description: Host your own sports league using Leagueify, the all-in-one league hosting platform.
@@ -158,6 +158,77 @@ paths:
           $ref: "#/components/errors/unauthorized"
         403:
           $ref: "#/components/errors/forbidden"
+  /players:
+    get:
+      tags:
+      - Players
+      security:
+        - bearerAuth: []
+      summary: List Account Players
+      description: ''
+      responses:
+        200:
+          $ref: "#/components/success/players"
+        401:
+          $ref: "#/components/errors/unauthorized"
+        404:
+          $ref: "#/components/errors/not-found"
+    post:
+      tags:
+      - Players
+      security:
+        - bearerAuth: []
+      summary: Create Players
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/players/creation"
+      responses:
+        201:
+          $ref: "#/components/success/created"
+        400:
+          $ref: "#/components/errors/badRequest"
+        401:
+          $ref: "#/components/errors/unauthorized"
+  /players/{id}:
+    delete:
+      tags:
+        - Players
+      summary: Delete Player
+      description: ''
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: playerID to Delete
+          required: true
+          type: string
+      responses:
+        204:
+          description: Player Deleted
+        401:
+          $ref: "#/components/errors/unauthorized"
+    get:
+      tags:
+      - Players
+      security:
+        - bearerAuth: []
+      summary: Get Player Detail
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          description: Player to retrieve
+          required: true
+          type: string
+      responses:
+        200:
+          $ref: "#/components/success/player"
+        401:
+          $ref: "#/components/errors/unauthorzied"
   /seasons:
     get:
       tags:
@@ -411,6 +482,39 @@ components:
           description: Sport ID for the associated league
           type: string
           example: FGDR
+  players:
+    creation:
+      type: object
+      required:
+        - players
+      properties:
+        players:
+          description: Account players list
+          type: array
+          items:
+            description: Player detail
+            type: object
+            required:
+              - firstName
+              - lastName
+              - dateOfBirth
+            properties:
+              firstName:
+                description: Player first name
+                type: string
+                minLength: 2
+                maxLength: 32
+                example: Jane
+              lastName:
+                description: Player last name
+                type: string
+                minLength: 2
+                maxLength: 32
+                example: Doe
+              dateOfBirth:
+                description: Player date of birth
+                type: string
+                example: 2020-03-06
   positions:
     creation:
       type: object
@@ -559,6 +663,87 @@ components:
                 description: JWT Authentication Token
                 type: string
                 example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwic3ViIjoiNE40MUMzQzkiLCJhdWQiOlsiYXBpIl0sImV4cCI6MTcyNDM4MTA0MCwibmJmIjoxNzI0MzgwNjgwLCJpYXQiOjE3MjQzODA3NDB9.Zow0_O6ThgyxhdU1D1oF4ZlqCrXC2wvCvh88QIbEXRk
+    player:
+      description: List of account players
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                description: HTTP status text
+                type: string
+                example: ok
+              detail:
+                description: Player Detail
+                type: object
+                properties:
+                  id:
+                    description: Player ID
+                    type: string
+                    example: 9NBKESVMQ6
+                  parentID:
+                    description: Parent ID
+                    type: string
+                    example: 5Y7BN6AG
+                  firstName:
+                    description: Player First Name
+                    type: string
+                    example: John
+                  lastName:
+                    description: Player Last Name
+                    type: string
+                    example: Doe
+                  dateOfBirth:
+                    description: Player Date of Birth
+                    type: string
+                    example: "2020-03-06"
+                  divisionID:
+                    description: Player Division
+                    type: string
+                    example: "123456"
+                  teamID:
+                    description: Player Team
+                    type: string
+                    example: "12345678"
+                  isRegistered:
+                    description: Player Registration Status
+                    type: boolean
+                    example: false
+                  hash:
+                    description: Player Hash
+                    type: string
+                    example: 8178fe39eca2e306530ad9660a637c008ab6af043b9b9667a9cdb936f33bcaa7
+    players:
+      description: List of account players
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                description: HTTP status text
+                type: string
+                example: ok
+              detail:
+                description: List of player names and ids
+                type: array
+                items:
+                  description: Player objects
+                  type: object
+                  properties:
+                    id:
+                      description: Player ID
+                      type: string
+                      example: C329VF
+                    firstName:
+                      description: Player First Name
+                      type: string
+                      example: John
+                    lastName:
+                      description: Player Last Name
+                      type: string
+                      example: Doe
     positions:
       description: League Positions
       content:
