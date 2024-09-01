@@ -17,10 +17,10 @@ func (h *handler) CreateSeason(payload model.Season) error {
 	}
 
 	var dateErrors []string
-	if !date.ValidaDateRange(payload.Season) {
+	if !date.ValidDateRange(payload.Season) {
 		dateErrors = append(dateErrors, "season")
 	}
-	if !date.ValidaDateRange(payload.Registration) {
+	if !date.ValidDateRange(payload.Registration) {
 		dateErrors = append(dateErrors, "registration")
 	}
 	if len(dateErrors) != 0 {
@@ -85,13 +85,13 @@ func (h *handler) UpdateSeason(seasonID string, payload model.SeasonUpdate) erro
 	seasonDates := model.SeasonDates{}
 	var dateErrors []string
 	if payload.Season != seasonDates {
-		if !date.ValidaDateRange(payload.Season) {
+		if !date.ValidDateRange(payload.Season) {
 			dateErrors = append(dateErrors, "season")
 		}
 		season.Season = payload.Season
 	}
 	if payload.Registration != seasonDates {
-		if !date.ValidaDateRange(payload.Registration) {
+		if !date.ValidDateRange(payload.Registration) {
 			dateErrors = append(dateErrors, "registration")
 		}
 		season.Registration = payload.Registration
