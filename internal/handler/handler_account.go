@@ -33,7 +33,7 @@ func (h *handler) CreateAccount(payload model.AccountCreation) error {
 
 	payload.ID = token.SignedToken(8)
 	payload.IsAdmin = !h.db.HasActiveAccounts()
-	payload.IsActive = true
+	payload.IsActive = !h.db.HasActiveEmailConfig()
 
 	if err := h.db.CreateAccount(payload); err != nil {
 		return err

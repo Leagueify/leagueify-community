@@ -27,7 +27,6 @@ func init() {
 			password TEXT NOT NULL,
 			phone TEXT NOT NULL UNIQUE,
 			date_of_birth TEXT NOT NULL,
-			player_ids TEXT[] NOT NULL,
 			coach BOOLEAN DEFAULT false,
 			volunteer BOOLEAN DEFAULT false,
 			is_active BOOLEAN DEFAULT false,
@@ -62,15 +61,14 @@ func (p Postgres) CreateAccount(account model.AccountCreation) error {
 	if _, err := p.DB.Exec(`
 		INSERT INTO accounts (
 			id, first_name, last_name, email, password, phone,
-			date_of_birth, player_ids, coach, volunteer, is_active,
-			is_admin
+			date_of_birth, coach, volunteer, is_active, is_admin
 		)
 		VALUES (
-			$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12
+			$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
 		)`,
 		account.ID[:len(account.ID)-1], account.FirstName,
 		account.LastName, account.Email, account.Password,
-		account.Phone, account.DateOfBirth, "{}", account.Coach,
+		account.Phone, account.DateOfBirth, account.Coach,
 		account.Volunteer, account.IsActive, account.IsAdmin,
 	); err != nil {
 		return err
@@ -87,8 +85,8 @@ func (p Postgres) GetAccountByEmail(email string) (model.Account, error) {
 	`, email).Scan(
 		&account.ID, &account.FirstName, &account.LastName,
 		&account.Email, &account.Password, &account.Phone,
-		&account.DateOfBirth, &account.Players, &account.Coach,
-		&account.Volunteer, &account.IsActive, &account.IsAdmin,
+		&account.DateOfBirth, &account.Coach, &account.Volunteer,
+		&account.IsActive, &account.IsAdmin,
 	); err != nil {
 		return account, err
 	}
