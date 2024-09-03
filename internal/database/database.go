@@ -19,6 +19,12 @@ type Database interface {
 	// division functions
 	CreateDivisions(payload model.DivisionCreation) error
 	ListDivisions() ([]model.Division, error)
+	// email functions
+	CreateEmailConfig(payload model.EmailConfig) error
+	GetEmailConfig() (model.EmailConfig, error)
+	HasActiveEmailConfig() bool
+	HasExistingEmailConfig() bool
+	UpdateEmailConfig(emailConfigID string, payload model.EmailConfig) error
 	// league function
 	CreateLeague(league model.LeagueCreation) error
 	HasExistingLeague() bool

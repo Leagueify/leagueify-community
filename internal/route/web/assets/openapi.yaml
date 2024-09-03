@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  version: 0.8.1
+  version: 0.9.0
   title: Leagueify API
   summary: Open Source Sporting League Platform.
   description: Host your own sports league using Leagueify, the all-in-one league hosting platform.
@@ -132,7 +132,61 @@ paths:
           $ref: "#/components/errors/unauthorized"
         403:
           $ref: "#/components/errors/forbidden"
-
+  /email:
+    get:
+      tags:
+      - Email
+      security:
+        - bearerAuth: []
+      summary: Get Email Config
+      description: ''
+      responses:
+        200:
+          $ref: "#/components/success/email"
+        401:
+          $ref: "#/components/errors/unauthorized"
+        403:
+          $ref: "#/components/errors/forbidden"
+    patch:
+      tags:
+      - Email
+      security:
+        - bearerAuth: []
+      summary: Update Email Config
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/email/update"
+      responses:
+        200:
+          $ref: "#/components/success/generic"
+        400:
+          $ref: "#/components/errors/badRequest"
+        493:
+          $ref: "#/components/errors/forbidden"
+    post:
+      tags:
+      - Email
+      security:
+        - bearerAuth: []
+      summary: Create Email Config
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/email/creation"
+      responses:
+        201:
+          $ref: "#/components/success/created"
+        400:
+          $ref: "#/components/errors/badRequest"
+        401:
+          $ref: "#/components/errors/unauthorized"
+        403:
+          $ref: "#/components/errors/forbidden"
   /leagues:
     post:
       tags:
@@ -465,6 +519,63 @@ components:
                     description: Maximum age for division
                     type: integer
                     example: 18
+  email:
+    creation:
+      type: object
+      required:
+        - outboundEmail
+        - smtpHost
+        - smtpPort
+        - smtpUser
+        - smtpPass
+      properties:
+        outboundEmail:
+          description: Outbound Email Address
+          type: string
+          example: noreply@leagueify.org
+        smtpHost:
+          description: SMTP Hostname for Email Service
+          type: string
+          example: smtp.gmail.com
+        smtpPort:
+          description: SMTP Port for Email Service
+          type: integer
+          example: 465
+        smtpUser:
+          description: SMTP Username for Email Service
+          type: string
+          example: SMTPEmail
+        smtpPass:
+          description: SMTP Password for Email Service
+          type: string
+          example: SMTPPassword
+    update:
+      type: object
+      properties:
+        outboundEmail:
+          description: Outbound Email Address
+          type: string
+          example: noreply@leagueify.org
+        smtpHost:
+          description: SMTP Hostname for Email Service
+          type: string
+          example: smtp.gmail.com
+        smtpPort:
+          description: SMTP Port for Email Service
+          type: integer
+          example: 465
+        smtpUser:
+          description: SMTP Username for Email Service
+          type: string
+          example: SMTPEmail
+        smtpPass:
+          description: SMTP Password for Email Service
+          type: string
+          example: SMTPPassword
+        isActive:
+          description: Email config enabled flag
+          type: boolean
+          example: true
   league:
     creation:
       type: object
@@ -637,6 +748,53 @@ components:
                 description: HTTP status text
                 type: string
                 example: created
+    email:
+      description: Email Config Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                description: HTTP status text
+                type: string
+                example: ok
+              detail:
+                description: Email Config Detail
+                type: object
+                properties:
+                  id:
+                    description: Email config ID
+                    type: string
+                    example: "WXSZQP"
+                  outboundEmail:
+                    description: Outbound email address
+                    type: string
+                    example: "noreply@leagueify.org"
+                  smtpHost:
+                    description: SMTP service provider hostname
+                    type: string
+                    example: smtp.gmail.com
+                  smtpPort:
+                    description: SMTP service provider port
+                    type: integer
+                    example: 465
+                  smtpUser:
+                    description: SMTP service provider username
+                    type: string
+                    example: SMTPUser
+                  smtpPass:
+                    description: SMTP service provider password
+                    type: string
+                    example: SMTPPass
+                  hasError:
+                    description: Email config has an error
+                    type: boolean
+                    example: false
+                  isActive:
+                    description: Email config is currently active
+                    type: boolean
+                    example: true
     generic:
       description: Successful request
       content:
