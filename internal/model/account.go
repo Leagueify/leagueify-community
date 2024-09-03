@@ -1,9 +1,5 @@
 package model
 
-import (
-	"github.com/lib/pq"
-)
-
 type (
 	Account struct {
 		ID          string
@@ -13,7 +9,6 @@ type (
 		Password    string
 		Phone       string
 		DateOfBirth string
-		Players     pq.StringArray
 		Coach       bool
 		Volunteer   bool
 		IsActive    bool
